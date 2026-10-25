@@ -1,0 +1,1716 @@
+Infosys .NET Developer Interview — Complete Study Notes From Scratch
+I'll give you the material directly here in the chat so you can study at your own pace, without needing to depend on a downloaded document.
+
+Your Infosys job description specifically covers:
+- C# and object-oriented programming (OOP)
+- .NET / .NET Core and ASP.NET Core
+- RESTful APIs and Web API development
+- Microsoft Azure, including App Service, Azure Functions, and Service Bus
+- SQL Server and Entity Framework Core
+- Git, Azure DevOps, CI/CD pipelines
+- Microservices, Docker, and Kubernetes
+- Unit testing, code reviews, debugging, and production support
+I'll explain each subject from the basics, give practical examples, and include interview questions with sample answers. I'll also include project-based and scenario-based questions relevant to this role.
+
+One important point: the JD asks for 3–5 years of experience. Interviewers may therefore expect you to explain not only what a technology is, but also why you used it, how you implemented it, and how you would troubleshoot a real issue.
+Part 1. Infosys interview questions reported on Glassdoor
+I searched Glassdoor's Infosys interview reports, including .NET Developer and Senior .NET Developer roles. The reports are useful preparation evidence, but they are candidate-submitted experiences—not an official Infosys question bank or a guarantee of what your panel will ask.
+
+The following questions and topics are reported by candidates:
+Questions to prioritize
+Reported on Glassdoor · Organized for your JD
+
+C# and OOP
+- Abstract class vs interface
+- Virtual methods and overriding
+- SOLID principles
+- Delegates and extension methods
+- Parallel.ForEach()
+- CLR and garbage collection
+Sources: Infosys .NET Developer reports and Senior .NET reports.
+
+ASP.NET Core and Web API
+- Middleware and dependency injection
+- Service lifetimes: Transient, Scoped, Singleton
+- MVC request lifecycle, routing and filters
+- REST vs SOAP, HTTP methods and status codes
+- Session management, ViewBag, ViewData and TempData
+- Deployment and production rollback
+Source: Infosys interview report.
+
+SQL Server
+- ACID properties
+- Stored procedure vs function
+- Temporary tables vs table variables
+- DELETE vs TRUNCATE
+- SQL joins and second-highest salary
+- Primary key vs unique key
+Source: Senior .NET interview reports.
+
+Azure and architecture
+- Azure fundamentals
+- Azure Service Bus
+- Caching mechanisms
+- Design patterns and scalable applications
+- N-tier architecture and microservices
+- Unit testing
+Source: Glassdoor interview report. If this link does not resolve, use the main Infosys .NET interview page to browse reports.
+
+Recent reports also describe technical interviews covering C#, ASP.NET Core, SQL Server, LINQ, REST APIs, coding, and candidates' projects. 
+
+Glassdoor
++1
+
+
+
+
+Now let's study the subjects in a sequence that builds from the ground up.
+Part 2. C# programming from scratch
+2.1 What is C#?
+C# (pronounced C-sharp) is a programming language developed by Microsoft. It is used to create web applications, APIs, desktop software, cloud applications, and other systems.
+
+Example:
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string name = "Shima";
+        int experience = 3;
+
+        Console.WriteLine(name);
+        Console.WriteLine(experience);
+    }
+}
+
+
+Explanation:
+- using System; gives access to types such as Console.
+- class Program defines a class.
+- Main() is the program's entry point in this example.
+- string stores text.
+- int stores an integer.
+- Console.WriteLine() prints output.
+Output:
+Shima
+3
+
+
+2.2 Variables and data types
+A variable is a named location used to hold a value.
+Type	Example	Purpose
+int	int age = 25;	Whole numbers
+long	long id = 123456789L;	Larger whole numbers
+decimal	decimal salary = 45000.50m;	Precise decimal calculations
+double	double rate = 3.14;	Floating-point calculations
+bool	bool isActive = true;	True or false
+char	char grade = 'A';	One character
+string	string city = "Kochi";	Text
+DateTime	DateTime.Now	Date and time
+
+Example:
+decimal price = 1000m;
+decimal discount = 100m;
+decimal finalPrice = price - discount;
+
+Console.WriteLine(finalPrice); // 900
+
+
+Interview question: What is the difference between value types and reference types?
+
+Answer: Value types directly contain their values, while reference types contain references to objects. Examples of value types include int, bool, and struct. Examples of reference types include classes, arrays, and strings. Their copying and memory behavior differs; actual allocation depends on context and runtime implementation.
+2.3 Conditions and loops
+Conditions let a program make decisions.
+int marks = 75;
+
+if (marks >= 50)
+{
+    Console.WriteLine("Pass");
+}
+else
+{
+    Console.WriteLine("Fail");
+}
+
+
+A loop repeats a block of code.
+for (int i = 1; i <= 5; i++)
+{
+    Console.WriteLine(i);
+}
+
+
+A foreach loop is useful for processing every item in a collection.
+int[] numbers = { 10, 20, 30 };
+
+foreach (int number in numbers)
+{
+    Console.WriteLine(number);
+}
+
+
+Interview question: What is the difference between for and foreach?
+
+Answer: A for loop is useful when you need a counter, index, or precise control over iterations. A foreach loop is convenient when processing each item in an enumerable collection. foreach does not normally let you replace the collection's elements through its iteration variable.
+2.4 Methods
+A method is a reusable block of code.
+static int Add(int a, int b)
+{
+    return a + b;
+}
+
+
+Calling it:
+int result = Add(10, 20);
+Console.WriteLine(result); // 30
+
+
+Here, int before the method name specifies its return type, and a and b are parameters.
+
+Interview question: What is method overloading?
+
+Answer: Method overloading means using the same method name with different parameter signatures.
+static int Add(int a, int b)
+{
+    return a + b;
+}
+
+static int Add(int a, int b, int c)
+{
+    return a + b + c;
+}
+
+
+The compiler selects the applicable overload based on the arguments. Changing only the return type is not sufficient to overload a method.
+2.5 Arrays, strings and collections
+An array stores a fixed number of elements of a specified type.
+int[] numbers = { 10, 20, 30, 40 };
+Console.WriteLine(numbers[0]); // 10
+
+
+Important collection types:
+- List<T>: resizable collection.
+- Dictionary<TKey,TValue>: key-value lookup.
+- HashSet<T>: collection of unique values.
+- Queue<T>: first-in, first-out.
+- Stack<T>: last-in, first-out.
+Example using a list:
+List<string> names = new List<string>();
+
+names.Add("Anu");
+names.Add("Riya");
+names.Add("Meera");
+
+foreach (string name in names)
+{
+    Console.WriteLine(name);
+}
+
+
+string vs StringBuilder
+Strings in C# are immutable, which means modifying a string creates another string rather than changing the existing string object.
+
+For repeated modifications, StringBuilder is often more efficient.
+using System.Text;
+
+StringBuilder sb = new StringBuilder();
+
+sb.Append("Hello");
+sb.Append(" ");
+sb.Append("World");
+
+Console.WriteLine(sb.ToString());
+
+
+Interview answer: Use string for ordinary text operations. Consider StringBuilder when repeatedly appending or modifying text in loops.
+2.6 Exception handling
+An exception represents an error or exceptional condition during execution.
+try
+{
+    int a = 10;
+    int b = 0;
+
+    int result = a / b;
+}
+catch (DivideByZeroException ex)
+{
+    Console.WriteLine("Cannot divide by zero.");
+}
+finally
+{
+    Console.WriteLine("Operation completed.");
+}
+
+
+- try: contains code that may fail.
+- catch: handles a matching exception.
+- finally: executes cleanup code in normal exception-handling flow.
+Interview question: Why should we avoid empty catch blocks?
+
+Answer: Empty catch blocks hide failures and make debugging difficult. Handle the exception appropriately, log useful context, or allow a centralized handler to process it. Never expose sensitive exception details to external API clients.
+2.7 LINQ
+LINQ means Language Integrated Query. It provides a consistent way to query collections and supported data sources.
+int[] numbers = { 1, 2, 3, 4, 5, 6 };
+
+var evenNumbers = numbers
+    .Where(n => n % 2 == 0)
+    .ToList();
+
+foreach (var number in evenNumbers)
+{
+    Console.WriteLine(number);
+}
+
+
+Output: 2, 4, 6
+
+Frequently used methods:
+- Where() — filters records.
+- Select() — transforms records.
+- OrderBy() — sorts ascending.
+- GroupBy() — groups records.
+- Any() — checks whether any record matches.
+- FirstOrDefault() — returns the first match or the default value.
+- Count() — counts records.
+- Sum() — calculates a total.
+Interview question: IEnumerable vs IQueryable?
+
+Answer: IEnumerable<T> represents a sequence that can be enumerated, often in memory. IQueryable<T> represents a query that a provider can translate, such as into SQL. With EF Core, using Where() on an IQueryable before materialization can let the database filter records instead of loading all rows into memory.
+2.8 Delegates, events and extension methods
+A delegate is a type-safe reference to a method with a compatible signature.
+delegate int Operation(int a, int b);
+
+static int Multiply(int a, int b)
+{
+    return a * b;
+}
+
+// Example use:
+Operation op = Multiply;
+Console.WriteLine(op(4, 5)); // 20
+
+
+An event allows an object to notify subscribers that something has happened. Events are commonly used in UI programming and notification patterns.
+
+An extension method adds a method to an existing type without modifying its source code.
+public static class StringExtensions
+{
+    public static bool IsLong(this string value)
+    {
+        return value != null && value.Length > 10;
+    }
+}
+
+
+Usage:
+string text = "Hello from Infosys";
+bool result = text.IsLong();
+
+
+Interview question: What are delegates used for?
+
+Answer: Delegates allow methods to be passed as values, which supports callbacks, event handling and flexible behavior. Built-in examples include Action, Func and Predicate<T>.
+2.9 Asynchronous programming
+async and await are commonly used for I/O-bound operations such as database calls and HTTP requests.
+public async Task<List<Employee>> GetEmployeesAsync()
+{
+    return await _dbContext.Employees.ToListAsync();
+}
+
+
+This lets the application avoid blocking the current thread while the database operation is waiting to complete.
+
+Interview question: Does async automatically make code faster?
+
+Answer: No. It improves responsiveness and thread utilization for asynchronous operations, especially I/O. CPU-intensive work generally requires different optimization or parallelization strategies.
+2.10 Parallel.ForEach()
+A recent Glassdoor report for an Infosys .NET Developer interview specifically mentioned Parallel.ForEach(). 
+
+Glassdoor
+
+
+
+
+It processes items in parallel where appropriate.
+Parallel.ForEach(numbers, number =>
+{
+    Console.WriteLine(number);
+});
+
+
+Unlike a regular foreach, the iterations may run concurrently. Their execution order is not guaranteed.
+
+Use it for suitable independent CPU-bound work. Avoid using it blindly for shared mutable state or ordinary asynchronous I/O. For asynchronous I/O, use asynchronous APIs and appropriate concurrency limits.
+
+Part 3. Object-oriented programming (OOP)
+OOP organizes software around objects containing data and behavior.
+3.1 Encapsulation
+Encapsulation protects an object's internal state and exposes controlled operations.
+public class BankAccount
+{
+    public decimal Balance { get; private set; }
+
+    public void Deposit(decimal amount)
+    {
+        if (amount <= 0)
+            throw new ArgumentException("Amount must be positive.");
+
+        Balance += amount;
+    }
+}
+
+
+The balance can be read publicly, but outside code cannot set it directly.
+3.2 Inheritance
+Inheritance allows a class to extend another class.
+public class Employee
+{
+    public string Name { get; set; }
+}
+
+public class Manager : Employee
+{
+    public int TeamSize { get; set; }
+}
+
+
+Manager inherits the Name property from Employee.
+3.3 Polymorphism
+Polymorphism allows different implementations to be used through a common contract.
+public class Animal
+{
+    public virtual void Speak()
+    {
+        Console.WriteLine("Animal sound");
+    }
+}
+
+public class Dog : Animal
+{
+    public override void Speak()
+    {
+        Console.WriteLine("Bark");
+    }
+}
+
+
+Usage:
+Animal animal = new Dog();
+animal.Speak(); // Bark
+
+
+The overridden method is selected at runtime.
+3.4 Abstraction
+Abstraction exposes essential behavior while hiding implementation details.
+public interface IPaymentService
+{
+    void Pay(decimal amount);
+}
+
+public class CardPaymentService : IPaymentService
+{
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"Paid {amount} by card.");
+    }
+}
+
+
+The caller depends on the payment contract rather than the implementation details.
+3.5 Interface vs abstract class
+Interface	Abstract class
+Defines a contract	Defines a base type and can share implementation
+A class can implement multiple interfaces	A class can inherit from only one class
+Can provide default implementations in modern C#	Can contain fields, constructors and implemented methods
+Useful for loosely coupled services	Useful for closely related types sharing state or behavior
+
+Infosys-style question: When would you use an interface in your project?
+
+Answer: If a controller depends on IEmployeeService, I can replace the actual service with a mock during unit testing. I can also provide another implementation without changing the controller. This reduces coupling and improves maintainability.
+3.6 SOLID principles
+- S — Single Responsibility: A class should have one main responsibility.
+- O — Open/Closed: Software should be open to extension but closed to unnecessary modification.
+- L — Liskov Substitution: A derived type should work wherever its base type is expected without breaking correctness.
+- I — Interface Segregation: Prefer smaller, focused interfaces.
+- D — Dependency Inversion: Depend on abstractions rather than concrete implementations.
+Example of the Open/Closed Principle:
+
+Instead of adding new if/else branches to a single payment class every time a payment method is added, define IPaymentService and provide implementations such as CardPaymentService and UPIPaymentService.
+3.7 Other common OOP questions
+Q. What is a constructor?
+
+A constructor initializes an object when it is created. It commonly sets initial property values or required dependencies.
+
+Q. What is a static class?
+
+A static class cannot be instantiated and contains static members. It is useful for stateless utility operations.
+
+Q. What is a sealed class?
+
+A sealed class cannot be inherited from. A sealed override method also prevents further overriding of that method in derived classes.
+
+Q. What is a virtual method? Can it be overridden?
+
+Yes. A method marked virtual in a base class can be overridden by a derived class using override, unless the method is otherwise restricted by the type's design.
+
+Q. What is the difference between ref, out and in?
+- ref: passes a variable by reference; it must be initialized before the call.
+- out: passes a variable by reference for output; the method must assign it before returning.
+- in: passes a readonly reference; the called method cannot assign a new value to that parameter.
+Q. What is garbage collection?
+
+The .NET garbage collector automatically reclaims memory used by managed objects that are no longer reachable. It does not replace the need to dispose resources such as file handles and database connections; use using/Dispose() for those.
+
+Part 4. .NET and ASP.NET Core
+4.1 Difference between C#, .NET, .NET Framework and ASP.NET Core
+- C#: the programming language.
+- .NET: the development platform and runtime.
+- .NET Framework: the older Windows-focused implementation.
+- Modern .NET: the cross-platform platform used for new development.
+- ASP.NET Core: the web framework for building web applications and APIs.
+4.2 What happens when a request reaches ASP.NET Core?
+A simplified request flow:
+HTTP request
+
+Web server (Kestrel / hosting)
+
+Middleware pipeline
+
+Routing and endpoint selection
+
+Controller or API endpoint
+
+Service / business logic
+
+EF Core / SQL Server
+
+HTTP response
+
+
+This is a simplified conceptual flow; the exact order and components depend on application configuration.
+4.3 Middleware
+Middleware components handle requests and responses as they pass through a pipeline.
+
+Common middleware includes:
+- Exception handling
+- HTTPS redirection
+- Routing
+- Authentication
+- Authorization
+- Static files
+- CORS
+Example:
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+var app = builder.Build();
+
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+
+The authentication middleware must be configured before authorization when both are used. Actual middleware ordering should follow the features and routing setup in your application.
+
+Interview question: What happens if middleware is in the wrong order?
+
+Answer: Requests may bypass expected behavior or fail. For example, authorization cannot correctly rely on the authenticated user if authentication has not run first.
+4.4 Dependency injection and service lifetimes
+ASP.NET Core includes a built-in dependency injection container.
+builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddSingleton<IApplicationCache, ApplicationCache>();
+
+
+Lifetime	Meaning	Typical use
+Transient	New instance each time it is resolved	Lightweight stateless services
+Scoped	One instance per scope, usually one HTTP request	Request-specific business services and EF Core DbContext
+Singleton	One instance for the application lifetime	Thread-safe shared services
+
+Interview question: Why should a singleton not directly depend on a scoped service?
+
+Answer: The singleton lives longer than the scoped service. Capturing a scoped service can cause lifetime problems and unintended state reuse. Use an appropriate scope or redesign the dependency.
+4.5 MVC: Model, View and Controller
+- Model: represents application data and domain logic.
+- View: presents the user interface.
+- Controller: receives requests, coordinates application behavior and returns a response.
+Example: in a meeting-room booking application, the model could represent a booking, the view displays available rooms, and the controller handles the user's booking request.
+4.6 ViewBag, ViewData and TempData
+Feature	ViewBag	ViewData	TempData
+Access	Dynamic property	Dictionary	Dictionary
+Typical purpose	Data for the current view	Data for the current view	Passing data across a redirect
+Persistence	Current request	Current request	Usually available to the next request; storage provider and access affect lifetime
+
+Example:
+ViewBag.Message = "Booking successful";
+ViewData["RoomName"] = "Meeting Room A";
+TempData["Success"] = "Request submitted";
+
+
+ViewBag is a dynamic wrapper around ViewData. TempData is useful for a one-time notification after a POST-and-redirect flow.
+4.7 Routing
+Routing maps a URL to an endpoint.
+
+Attribute routing example:
+[Route("api/[controller]")]
+[ApiController]
+public class EmployeesController : ControllerBase
+{
+    [HttpGet("{id:int}")]
+    public IActionResult Get(int id)
+    {
+        return Ok(new { Id = id, Name = "Anu" });
+    }
+}
+
+
+A GET request to /api/employees/5 can invoke this action with id = 5.
+4.8 Filters
+ASP.NET Core MVC filters can run at different stages around action execution.
+- Authorization filters
+- Resource filters
+- Action filters
+- Exception filters
+- Result filters
+Filters are useful for cross-cutting MVC concerns. Middleware operates at a broader request-pipeline level.
+4.9 Authentication vs authorization
+- Authentication: verifies identity.
+- Authorization: checks permissions.
+For example, a user may log in successfully but still be forbidden from approving a booking if they do not have the appropriate role.
+4.10 Session state
+HTTP is stateless by default: each request is independent. Session state lets an application associate data with a user across requests, subject to its session configuration and storage.
+
+Use session for appropriate short-lived user-specific data, not as a replacement for durable database storage or a well-designed authentication system.
+
+Part 5. REST API and Web API development
+5.1 What is an API?
+API stands for Application Programming Interface. It defines how one software component communicates with another.
+
+For example, a meeting-room booking website can call a .NET API to retrieve available rooms from SQL Server.
+5.2 What is a REST API?
+REST is an architectural style for designing networked services. A RESTful API commonly represents resources using URLs and uses HTTP methods to operate on them.
+
+Suppose your application manages employees.
+HTTP method	Endpoint	Purpose
+GET	/api/employees	Retrieve employees
+GET	/api/employees/10	Retrieve employee 10
+POST	/api/employees	Create an employee
+PUT	/api/employees/10	Replace employee 10
+PATCH	/api/employees/10	Partially update employee 10
+DELETE	/api/employees/10	Delete employee 10
+
+Important HTTP status codes
+Code	Meaning
+200	OK
+201	Created
+202	Accepted for processing
+204	Successful request with no response body
+400	Bad Request
+401	Authentication required or invalid
+403	Forbidden
+404	Not Found
+409	Conflict
+500	Internal Server Error
+
+Interview question: What is the difference between PUT and PATCH?
+
+Answer: PUT generally replaces a resource representation, while PATCH applies a partial update. For example, PUT may update the complete employee record, while PATCH may update only the employee's phone number.
+5.3 Build your first Web API
+A simple controller could look like this:
+using Microsoft.AspNetCore.Mvc;
+
+[ApiController]
+[Route("api/[controller]")]
+public class EmployeesController : ControllerBase
+{
+    [HttpGet]
+    public IActionResult GetEmployees()
+    {
+        var employees = new[]
+        {
+            new { Id = 1, Name = "Anu" },
+            new { Id = 2, Name = "Riya" }
+        };
+
+        return Ok(employees);
+    }
+
+    [HttpGet("{id:int}")]
+    public IActionResult GetEmployee(int id)
+    {
+        if (id <= 0)
+            return BadRequest("Invalid employee ID.");
+
+        if (id != 1)
+            return NotFound();
+
+        return Ok(new { Id = 1, Name = "Anu" });
+    }
+}
+
+
+This example uses sample data, not a database.
+- [ApiController] enables API-oriented conventions.
+- [Route] defines the URL pattern.
+- [HttpGet] maps GET requests.
+- Ok() returns HTTP 200.
+- BadRequest() returns HTTP 400.
+- NotFound() returns HTTP 404.
+5.4 Model validation and DTOs
+A DTO (Data Transfer Object) defines the data a client is allowed to send or receive.
+using System.ComponentModel.DataAnnotations;
+
+public class CreateEmployeeDto
+{
+    [Required]
+    [StringLength(100)]
+    public string Name { get; set; } = "";
+
+    [Range(18, 100)]
+    public int Age { get; set; }
+}
+
+
+With [ApiController], invalid model data normally results in an automatic HTTP 400 response.
+
+Why use DTOs instead of exposing database entities directly?
+
+DTOs let you control the API contract, avoid accidentally exposing internal fields, prevent over-posting, and separate the database schema from the public API.
+5.5 Dependency injection in a Web API
+A common structure is:
+- Controller — receives HTTP requests.
+- Service — contains business logic.
+- Repository or data-access component — handles database operations when that abstraction is useful.
+- DbContext — interacts with the database through EF Core.
+Example:
+public interface IEmployeeService
+{
+    string GetEmployeeName(int id);
+}
+
+public class EmployeeService : IEmployeeService
+{
+    public string GetEmployeeName(int id)
+    {
+        return id == 1 ? "Anu" : "Unknown";
+    }
+}
+
+
+Register the service:
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+
+Inject it into a controller:
+public class EmployeesController : ControllerBase
+{
+    private readonly IEmployeeService _service;
+
+    public EmployeesController(IEmployeeService service)
+    {
+        _service = service;
+    }
+}
+
+
+This is constructor injection.
+5.6 JWT authentication
+JWT means JSON Web Token. A server can issue a signed token after authentication, and a client sends it with subsequent requests.
+
+Example request header:
+Authorization: Bearer <access-token>
+
+
+The API validates the token and determines the user's identity and permissions.
+
+Important security points:
+- Use HTTPS.
+- Validate token signature, issuer, audience and expiry.
+- Keep signing keys and secrets secure.
+- Apply authorization policies to protected endpoints.
+- Do not put passwords or sensitive information in a JWT payload merely because it is encoded.
+5.7 REST vs SOAP
+REST is an architectural style that commonly uses HTTP and JSON. SOAP is a protocol based on structured XML messages and formal service contracts.
+
+REST is common for modern web APIs. SOAP remains relevant in systems requiring established SOAP contracts and WS-* capabilities.
+5.8 CORS
+CORS means Cross-Origin Resource Sharing. It controls which browser origins can access a web resource under the browser's cross-origin security rules.
+
+It is not a substitute for authentication or authorization.
+
+Interview question: Why does an API work in Postman but fail in the browser?
+
+Answer: A possible cause is CORS. Postman is not subject to the browser's CORS enforcement in the same way. I would inspect the browser console, check the origin and preflight request, and configure an appropriate allowed-origin policy.
+5.9 API performance and reliability
+Important practices include:
+- Use asynchronous I/O for database and HTTP calls.
+- Paginate large result sets.
+- Select only the columns required.
+- Avoid N+1 database queries.
+- Add indexes based on actual query patterns.
+- Use caching where appropriate.
+- Validate input and apply rate limits when needed.
+- Use cancellation tokens, sensible timeouts and structured logging.
+- Make retry behavior safe, especially for operations that may create duplicate records.
+Interview question: How would you troubleshoot a slow API?
+
+Answer: First, measure where the time is spent. Check application logs, request traces, database execution plans, dependency calls, response size and recent changes. Optimize the identified bottleneck and compare measurements before and after.
+
+Part 6. SQL Server — detailed study notes
+SQL Server is a relational database management system. A .NET application stores and retrieves structured information through SQL queries or data-access libraries such as EF Core.
+6.1 Database fundamentals
+A database contains tables. A table contains rows and columns.
+
+Example: Employees
+EmployeeId	Name	DepartmentId	Salary
+1	Anu	10	40000
+2	Riya	20	50000
+3	Meera	10	60000
+4	Rahul	30	45000
+
+- Row: one employee record.
+- Column: a property such as Name.
+- Primary key: uniquely identifies each row.
+- Foreign key: establishes a relationship with another table.
+6.2 SQL commands
+SQL commands are commonly grouped as follows:
+- DDL: CREATE, ALTER, DROP.
+- DML: INSERT, UPDATE, DELETE.
+- DQL: SELECT is commonly classified as a query language command.
+- DCL: GRANT, REVOKE.
+- TCL: COMMIT, ROLLBACK.
+Some classifications group these commands slightly differently, but these are the standard interview distinctions.
+
+Example:
+CREATE TABLE Employees
+(
+    EmployeeId INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    DepartmentId INT,
+    Salary DECIMAL(12, 2)
+);
+
+INSERT INTO Employees
+    (EmployeeId, Name, DepartmentId, Salary)
+VALUES
+    (1, 'Anu', 10, 40000);
+
+
+6.3 SELECT, WHERE and ORDER BY
+SELECT Name, Salary
+FROM Employees
+WHERE Salary > 45000
+ORDER BY Salary DESC;
+
+
+This retrieves employees earning more than 45,000 and sorts them from highest salary to lowest.
+6.4 SQL joins
+Assume two tables:
+
+Employees(EmployeeId, Name, DepartmentId)
+
+Departments(DepartmentId, DepartmentName)
+
+INNER JOIN
+
+Returns rows with matching department records.
+SELECT e.Name, d.DepartmentName
+FROM Employees e
+INNER JOIN Departments d
+    ON e.DepartmentId = d.DepartmentId;
+
+
+LEFT JOIN
+
+Returns all employees, including those without a matching department.
+SELECT e.Name, d.DepartmentName
+FROM Employees e
+LEFT JOIN Departments d
+    ON e.DepartmentId = d.DepartmentId;
+
+
+Interview question: What is the difference between INNER JOIN and LEFT JOIN?
+
+Answer: INNER JOIN returns matching rows from both sides. LEFT JOIN returns all rows from the left table and matching rows from the right table, with NULL values for missing right-side matches.
+6.5 GROUP BY and HAVING
+Suppose you need the number of employees in each department.
+SELECT DepartmentId, COUNT(*) AS EmployeeCount
+FROM Employees
+GROUP BY DepartmentId;
+
+
+To display only departments with more than five employees:
+SELECT DepartmentId, COUNT(*) AS EmployeeCount
+FROM Employees
+GROUP BY DepartmentId
+HAVING COUNT(*) > 5;
+
+
+WHERE filters rows before grouping. HAVING filters groups after aggregation.
+6.6 SQL interview coding questions
+Question 1: Find the second-highest distinct salary
+SELECT MAX(Salary) AS SecondHighestSalary
+FROM Employees
+WHERE Salary < (
+    SELECT MAX(Salary)
+    FROM Employees
+);
+
+
+This returns the second-highest distinct salary. If fewer than two distinct salaries exist, the result is NULL.
+
+An alternative using a window function:
+WITH SalaryRanks AS
+(
+    SELECT Salary,
+           DENSE_RANK() OVER (ORDER BY Salary DESC) AS SalaryRank
+    FROM Employees
+)
+SELECT DISTINCT Salary
+FROM SalaryRanks
+WHERE SalaryRank = 2;
+
+
+Question 2: Find employees whose names end with K
+SELECT *
+FROM Employees
+WHERE Name LIKE '%K';
+
+
+Question 3: Find duplicate names
+SELECT Name, COUNT(*) AS Total
+FROM Employees
+GROUP BY Name
+HAVING COUNT(*) > 1;
+
+
+Question 4: Find the highest-paid employee in each department
+WITH RankedEmployees AS
+(
+    SELECT EmployeeId,
+           Name,
+           DepartmentId,
+           Salary,
+           DENSE_RANK() OVER
+           (
+               PARTITION BY DepartmentId
+               ORDER BY Salary DESC
+           ) AS SalaryRank
+    FROM Employees
+)
+SELECT EmployeeId, Name, DepartmentId, Salary
+FROM RankedEmployees
+WHERE SalaryRank = 1;
+
+
+This returns all employees tied for the highest salary in each department.
+6.7 Primary key vs unique key
+A primary key uniquely identifies a row and cannot contain NULL values. A table has only one primary key constraint, though it may be composite.
+
+A table can have multiple unique constraints. In SQL Server, NULL handling for unique constraints has specific rules, and a single-column unique constraint normally allows at most one NULL.
+6.8 DELETE vs TRUNCATE vs DROP
+Command	Purpose
+DELETE	Removes selected rows, or all rows if no filter is specified
+TRUNCATE TABLE	Removes all rows using a table-level operation; no WHERE clause
+DROP TABLE	Removes the table definition and its data
+
+Key distinctions:
+- DELETE supports WHERE.
+- TRUNCATE TABLE resets identity values in ordinary SQL Server use and has restrictions, including foreign-key references.
+- Both DELETE and TRUNCATE are transactional in SQL Server and can be rolled back when used within a transaction that is rolled back.
+- DROP TABLE removes the table itself, not merely its rows.
+6.9 Stored procedure vs function
+A stored procedure is a named database routine that can execute SQL statements, return result sets and use output parameters.
+CREATE PROCEDURE GetEmployeesByDepartment
+    @DepartmentId INT
+AS
+BEGIN
+    SELECT EmployeeId, Name, Salary
+    FROM Employees
+    WHERE DepartmentId = @DepartmentId;
+END;
+
+
+Call it:
+EXEC GetEmployeesByDepartment @DepartmentId = 10;
+
+
+A SQL Server function returns a scalar value or table and is subject to restrictions on its use of side effects and other operations.
+
+Interview answer: Procedures are commonly used for operations and workflows involving SQL statements. Functions are useful when reusable calculations or table-valued results need to participate in queries.
+6.10 Indexes
+An index helps SQL Server locate data efficiently.
+- Clustered index: determines the organization of table rows at the leaf level of the index.
+- Nonclustered index: separate index structure that contains keys and row locators.
+- Unique index: enforces uniqueness.
+- Composite index: uses multiple columns.
+Example:
+CREATE NONCLUSTERED INDEX IX_Employees_DepartmentId
+ON Employees(DepartmentId);
+
+
+Indexes can improve reads, but they use storage and add overhead to inserts, updates and deletes. Design them based on real workload and query plans.
+6.11 ACID properties
+ACID describes key transaction properties.
+- Atomicity: all operations succeed or the transaction is rolled back.
+- Consistency: constraints and rules remain satisfied.
+- Isolation: concurrent transactions are controlled according to the chosen isolation level.
+- Durability: committed changes persist according to the database's durability guarantees.
+6.12 Temporary tables vs table variables
+A temporary table such as #EmployeesTemp is created in tempdb and can support indexes and statistics. A table variable is declared with DECLARE @Employees TABLE (...) and has different optimization and scope behavior.
+
+Modern SQL Server versions have improved table-variable optimization, but neither type is universally faster. Compare actual execution plans and row counts.
+6.13 Triggers and magic tables
+A trigger runs automatically in response to certain database events, such as INSERT, UPDATE or DELETE.
+
+In SQL Server DML triggers, the special logical tables inserted and deleted contain the new and old row versions relevant to the operation.
+
+For example, an UPDATE trigger can compare the old and new salary values. Remember that a trigger can receive multiple rows at once, so write set-based logic rather than assuming only one row was changed.
+6.14 Transactions and deadlocks
+A transaction groups related database changes into a unit of work.
+BEGIN TRANSACTION;
+
+UPDATE Employees
+SET Salary = Salary + 1000
+WHERE EmployeeId = 1;
+
+-- Validate the operation before committing.
+COMMIT TRANSACTION;
+
+
+In production code, use proper error handling and roll back if a failure occurs.
+
+A deadlock happens when transactions wait on resources held by one another. SQL Server chooses a victim transaction to roll back.
+
+To reduce deadlocks:
+- Keep transactions short.
+- Access resources in a consistent order.
+- Add appropriate indexes.
+- Avoid unnecessary locks.
+- Capture and analyze deadlock information.
+6.15 SQL injection
+Unsafe code:
+string sql =
+    "SELECT * FROM Employees WHERE Name = '" + name + "'";
+
+
+If name contains malicious SQL, concatenation can allow the input to change the query.
+
+Use parameterized queries or safe ORM parameterization instead. This is an important security topic for the Infosys role.
+
+Part 7. Entity Framework Core
+7.1 What is Entity Framework Core?
+EF Core is an object-relational mapper (ORM). It lets developers work with database records through C# classes and LINQ instead of writing every SQL query manually.
+7.2 Entity and DbContext
+An entity is a class mapped to database data.
+public class Employee
+{
+    public int EmployeeId { get; set; }
+    public string Name { get; set; } = "";
+    public decimal Salary { get; set; }
+}
+
+
+The DbContext manages queries and changes.
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<Employee> Employees => Set<Employee>();
+}
+
+
+Register it in the application's service container using the SQL Server provider and a properly configured connection string.
+7.3 CRUD operations
+Retrieve:
+var employees = await _db.Employees.ToListAsync();
+
+
+Filter:
+var employee = await _db.Employees
+    .FirstOrDefaultAsync(e => e.EmployeeId == id);
+
+
+Insert:
+_db.Employees.Add(new Employee
+{
+    Name = "Anu",
+    Salary = 40000
+});
+
+await _db.SaveChangesAsync();
+
+
+Update:
+var employee = await _db.Employees.FindAsync(id);
+
+if (employee != null)
+{
+    employee.Salary = 45000;
+    await _db.SaveChangesAsync();
+}
+
+
+Delete:
+var employee = await _db.Employees.FindAsync(id);
+
+if (employee != null)
+{
+    _db.Employees.Remove(employee);
+    await _db.SaveChangesAsync();
+}
+
+
+7.4 Code First vs Database First
+Code First: Create C# entity classes and use EF Core migrations to create or update the database schema.
+
+Database First: Start with an existing database and generate entity classes and a DbContext from the schema.
+
+Choose based on how the application is managed and who owns the database schema.
+7.5 Migrations
+Migrations represent changes to the database schema over time.
+
+Typical commands:
+dotnet ef migrations add AddEmployeeTable
+dotnet ef database update
+
+
+Review migrations before applying them to production. Schema changes should be deployed carefully, especially when older application versions may still be running.
+7.6 Eager vs lazy vs explicit loading
+- Eager loading: load related data as part of the query, often using Include().
+- Lazy loading: related data is fetched when a navigation property is accessed, if lazy-loading support is configured.
+- Explicit loading: deliberately request related data later.
+Example:
+var departments = await _db.Departments
+    .Include(d => d.Employees)
+    .ToListAsync();
+
+
+Interview question: What is the N+1 query problem?
+
+Answer: It occurs when an initial query retrieves a collection and then another query runs for each item to fetch related data. Use appropriate projections, eager loading or carefully designed queries to reduce unnecessary database round trips.
+7.7 Change tracking vs AsNoTracking
+EF Core tracks entities returned from ordinary tracking queries so it can detect changes and persist them using SaveChanges().
+
+For read-only queries:
+var employees = await _db.Employees
+    .AsNoTracking()
+    .ToListAsync();
+
+
+This avoids tracking overhead when change tracking is unnecessary.
+7.8 ADO.NET vs EF Core
+ADO.NET	EF Core
+Direct database access through commands and readers	Object-relational mapping
+More manual SQL and mapping	LINQ and entity mapping
+Fine-grained control	Faster development for common CRUD work
+Suitable for specialized SQL and low-level access	Suitable for many business applications
+
+Both can be used in the same overall application when there is a clear reason.
+
+Part 8. Microsoft Azure — from absolute zero
+Azure is one of the most important parts of your JD. If you have not used it professionally, learn the concepts and complete a small practice deployment. Do not claim production experience you do not have.
+8.1 What is cloud computing?
+Traditionally, a company may purchase physical servers, configure them, maintain them, and install applications on them.
+
+Cloud computing lets the company rent computing resources and managed services from a provider such as Microsoft Azure.
+
+Benefits include:
+- Scaling resources as demand changes.
+- Accessing services without managing all the underlying hardware.
+- Deploying applications across supported geographic regions.
+- Using managed databases, monitoring, security and storage services.
+- Paying according to the selected service and usage model.
+8.2 Azure terminology
+Term	Meaning
+Microsoft Entra ID tenant	Identity and access boundary for an organization
+Subscription	Management and billing boundary
+Resource group	Logical container for related Azure resources
+Resource	An individual service, such as a web app or database
+Region	Geographic area where resources are deployed
+RBAC	Role-Based Access Control
+Managed identity	Azure-managed identity for accessing supported services securely
+
+Example: your project could use a resource group containing an App Service, an Azure SQL Database and an Application Insights resource.
+8.3 Azure App Service
+Azure App Service is a managed platform for hosting web applications and APIs.
+
+Suppose you develop an ASP.NET Core Web API locally. You can deploy it to Azure App Service so clients can access it over the internet or an appropriately configured private network.
+
+Typical deployment process:
+1. Create or select an Azure subscription.
+2. Create a resource group.
+3. Create an App Service with a compatible runtime.
+4. Publish the application from Visual Studio, the .NET CLI, or a deployment pipeline.
+5. Configure environment variables and connection strings.
+6. Configure database connectivity and identity permissions.
+7. Enable logging and monitoring.
+8. Test the deployed endpoints.
+Interview question: What is the difference between IIS and Azure App Service?
+
+Answer: IIS is a web server that can host .NET applications, typically on Windows infrastructure. Azure App Service is a managed cloud hosting platform that abstracts much of the underlying infrastructure and provides deployment, scaling, configuration and monitoring integrations. An App Service can use Windows or Linux hosting, depending on the configuration.
+8.4 Azure Functions
+Azure Functions is a serverless compute service for running code in response to triggers.
+
+Common triggers include:
+- Timer trigger — runs on a schedule.
+- HTTP trigger — runs when an HTTP request arrives.
+- Queue trigger — processes queue messages.
+- Blob trigger — reacts to supported blob-storage events.
+Example scenario: a scheduled function runs every night to generate a report, or a queue-triggered function processes uploaded documents in the background.
+
+App Service vs Azure Functions: App Service is often used to host a continuously available web application or API. Functions is suited to event-driven workloads and individual tasks. The best option depends on execution patterns, hosting plans, scaling needs and application design.
+8.5 Azure SQL Database
+Azure SQL Database is a managed relational database service based on SQL Server technology.
+
+A typical architecture is:
+Client application
+
+Web or mobile client
+
+ASP.NET Core Web API
+
+Hosted on Azure App Service
+
+Azure SQL Database
+
+Relational data
+
+
+Security considerations:
+- Use secure connections.
+- Configure network access and firewall rules appropriately.
+- Use managed identity where supported and appropriate.
+- Store credentials in a secure service rather than source code.
+- Apply least-privilege permissions.
+- Monitor performance and database resource usage.
+8.6 Azure Key Vault
+Key Vault stores secrets, cryptographic keys and certificates.
+
+Examples of secrets include API credentials and database passwords.
+
+Instead of hardcoding a password in appsettings.json, you can use a managed identity to retrieve the secret from Key Vault, with the appropriate access permissions.
+
+Interview answer: Key Vault helps protect sensitive configuration and centralize access management. It reduces the need to distribute secrets through source code or deployment files.
+8.7 Azure Service Bus
+Azure Service Bus is a managed message broker that supports queues and topics.
+
+A queue allows one message to be processed by a consumer. A topic supports publish/subscribe messaging, where messages can be delivered to subscriptions.
+
+Example: after a meeting room is booked, the API saves the booking and sends a notification message. A background worker processes the message and sends an email.
+
+Benefits include decoupling services, buffering work, and processing tasks asynchronously.
+
+Important concepts:
+- Message acknowledgement and completion.
+- Retry handling.
+- Dead-letter queues.
+- Duplicate detection and idempotency.
+- Message ordering and delivery guarantees.
+- Dead-letter investigation and replay procedures.
+Do not assume every message is delivered exactly once to application logic. Consumers should be designed to handle duplicates safely.
+8.8 Azure Storage and Blob Storage
+Azure Storage provides services for storing different kinds of data.
+
+Blob Storage is useful for unstructured data such as:
+- Uploaded documents.
+- Images.
+- Reports.
+- Backup files.
+- Exported spreadsheets.
+For your Excel upload application, a possible design is to store the uploaded file in Blob Storage, create a processing record in SQL, and use a queue to trigger background validation and processing.
+8.9 Azure Monitor and Application Insights
+Monitoring helps you understand whether an application is working correctly.
+
+Application Insights can collect telemetry such as:
+- Request duration and failures.
+- Exceptions.
+- Dependency calls, including supported database and HTTP calls.
+- Distributed traces.
+- Application metrics.
+Scenario: the API becomes slow after deployment. You would check request duration, exceptions, dependency latency, database performance and recent release changes.
+8.10 Azure DevOps
+Azure DevOps provides tools to support software delivery.
+Component	Purpose
+Azure Repos	Git repositories
+Azure Pipelines	Build and deployment automation
+Azure Boards	Work items, bugs and sprint tracking
+Azure Test Plans	Test planning and management features
+
+8.11 CI/CD pipeline
+CI means Continuous Integration. Code changes are integrated and automatically built and tested.
+
+CD can mean Continuous Delivery or Continuous Deployment, depending on the workflow. It automates preparing or releasing software.
+
+A typical pipeline:
+Developer pushes code to Git
+
+Pipeline restores and builds .NET solution
+
+Unit tests run
+
+Application is published as an artifact
+
+Deploy to test / staging
+
+Run validation and health checks
+
+Approve or promote to production
+
+
+Interview question: How do you roll back a failed deployment?
+
+Answer: Assess the impact, notify the responsible team, inspect logs and metrics, and use the approved rollback strategy. If deployment slots or versioned artifacts are available, restore the last known-good version. Verify the service has recovered, communicate the result, and investigate the root cause before redeploying a fix.
+8.12 Azure questions and answers
+Q. What is a resource group?
+
+A logical container for managing related Azure resources.
+
+Q. What is a managed identity?
+
+An identity managed by Azure that allows supported resources to authenticate to other services without storing credentials in application code.
+
+Q. What is the difference between Azure Functions and Service Bus?
+
+Functions runs code in response to triggers. Service Bus transports messages between application components. They can be combined: a Service Bus message can trigger a Function.
+
+Q. What is a deployment slot?
+
+A separate deployment environment for an App Service application. Slots can support staged deployment and controlled swapping, depending on the hosting configuration.
+
+Q. How would you troubleshoot a deployed .NET API that cannot connect to SQL?
+
+Check the configured connection string or identity authentication, network access, firewall rules, database permissions, TLS requirements, DNS and application logs. Compare configuration between environments without exposing secrets.
+8.13 Your hands-on Azure exercise
+Create a small Employee API, run it locally, and then practise deploying it to Azure App Service. If you use Azure SQL, configure its connection securely. Enable logging and confirm that the API works after deployment.
+
+This single exercise connects several topics in your JD: C#, ASP.NET Core, REST, SQL, Azure, configuration and troubleshooting.
+
+Official learning resources:
+- Microsoft Learn — Azure training
+- Azure App Service documentation
+- Azure Functions documentation
+- Azure Service Bus documentation
+- Azure Key Vault documentation
+
+Part 9. Git, Docker, Kubernetes and microservices
+9.1 Git fundamentals
+Git is a version-control system that tracks source-code changes.
+
+Common commands:
+git clone <repository-url>
+git status
+git add .
+git commit -m "Add employee API"
+git pull
+git push
+git branch
+git switch -c feature/employee-api
+
+
+Typical workflow:
+1. Pull the latest code.
+2. Create a feature branch.
+3. Make and test changes.
+4. Commit and push the branch.
+5. Create a pull request.
+6. Resolve review comments and merge according to team policy.
+Interview question: What is a merge conflict?
+
+A merge conflict happens when Git cannot automatically reconcile competing changes. Review the affected lines, decide the intended combined result, run tests and commit the resolution.
+9.2 What is Docker?
+Docker is a platform for building and running containers. A container packages an application with the required dependencies into an isolated runtime environment.
+- Image: the packaged template.
+- Container: a running instance of an image.
+- Dockerfile: instructions for building an image.
+- Registry: a place to store and distribute images.
+A simplified Dockerfile for a .NET application uses a multi-stage build: one stage builds and publishes the application, and another stage contains the runtime and published output.
+
+Why use Docker? It helps make environments more consistent across development, testing and deployment.
+9.3 What is Kubernetes?
+Kubernetes orchestrates containers.
+
+It helps with:
+- Scheduling containers onto nodes.
+- Restarting failed workloads.
+- Service discovery and networking.
+- Scaling workloads.
+- Rolling deployments.
+Docker and Kubernetes are not alternatives: Docker-related tooling can build container images, while Kubernetes orchestrates containerized workloads.
+9.4 Monolithic architecture vs microservices
+Monolith: The application is deployed as one main unit. It is often simpler to build and operate initially.
+
+Microservices: The application is split into services around business capabilities, which can be developed and deployed independently.
+
+Example: a booking platform might have Booking, Notification and Identity services.
+
+Advantages of microservices include independent deployment and scaling. Challenges include network failures, distributed transactions, service discovery, observability, data consistency and operational complexity.
+
+Interview question: Should every application use microservices?
+
+No. A well-structured monolith may be more appropriate for a small or moderately complex system. Microservices are useful when the benefits of independent ownership, deployment and scaling justify their additional complexity.
+
+Part 10. Unit testing and code quality
+10.1 What is unit testing?
+A unit test checks a small piece of behavior in isolation.
+
+For example, you can test whether a booking service rejects a booking when the room is already occupied.
+
+Common .NET test frameworks include:
+- xUnit
+- NUnit
+- MSTest
+10.2 Arrange–Act–Assert
+- Arrange: prepare inputs and dependencies.
+- Act: execute the method.
+- Assert: check the expected result.
+Example using xUnit:
+public class Calculator
+{
+    public int Add(int a, int b) => a + b;
+}
+
+public class CalculatorTests
+{
+    [Fact]
+    public void Add_ReturnsSum()
+    {
+        var calculator = new Calculator();
+
+        int result = calculator.Add(2, 3);
+
+        Assert.Equal(5, result);
+    }
+}
+
+
+10.3 Unit vs integration vs end-to-end testing
+Type	What it checks
+Unit	One unit of behavior, often with dependencies isolated
+Integration	Components working together, such as an API and database
+End-to-end	A complete workflow across the system
+
+10.4 Mocking
+Mocking replaces a dependency with a controlled test implementation.
+
+For example, an IEmailService mock can verify that a booking service requests an email notification without sending a real email.
+
+Interview question: How would you test a service that uses a database?
+
+Answer: Unit-test the business rules with dependencies isolated. Then write integration tests using a test database or suitable isolated environment to validate EF Core mappings, queries, constraints and transactions. Mocks alone cannot prove that real database queries work correctly.
+10.5 Code review
+A code review should consider:
+- Correctness and readability.
+- Security and validation.
+- Error handling and logging.
+- Performance.
+- Unit and integration tests.
+- Naming, structure and maintainability.
+The purpose is to improve quality and share knowledge, not just check formatting.
+
+Part 11. Additional .NET interview questions reported on Glassdoor
+This section focuses on questions that are easy to overlook but can appear in lateral .NET interviews. Glassdoor candidate reports include questions on MVC state management, session handling, stored procedures, SOLID, architecture, unit testing and deployment. 
+
+Glassdoor
++2
+
+
+
+11.1 ASP.NET MVC questions
+Q1. What is the MVC request lifecycle?
+
+Answer: The request reaches the web server, routing identifies the controller and action, model binding populates action parameters, filters and validation run as configured, the action executes, and the result is returned to the client. The exact stages depend on the MVC version and result type.
+
+Q2. What is the difference between MVC and Web API?
+
+Answer: MVC commonly handles browser-facing applications and returns HTML views. Web APIs commonly return data, such as JSON, to other applications. ASP.NET Core can support both in the same application.
+
+Q3. What is model binding?
+
+Answer: Model binding maps incoming request data, such as route values, query strings and form fields, to action parameters or model properties.
+
+Q4. What is the purpose of an action filter?
+
+Answer: An action filter runs before and/or after an MVC action executes. It can be used for cross-cutting concerns such as action-level logging or reusable action behavior.
+
+Q5. What is routing?
+
+Answer: Routing maps an incoming URL and HTTP method to the appropriate endpoint or controller action.
+11.2 More C# questions
+Q6. What is the CLR?
+
+The Common Language Runtime executes managed .NET code and provides services such as garbage collection, exception handling and runtime type safety.
+
+Q7. What is managed code?
+
+Code executed under the control of the .NET runtime. Unmanaged code runs outside that runtime's management, such as many native-code libraries.
+
+Q8. What is boxing and unboxing?
+
+Boxing converts a value type to an object or compatible interface representation. Unboxing extracts the value type from a boxed object.
+int number = 10;
+object boxed = number;       // Boxing
+int result = (int)boxed;     // Unboxing
+
+
+Q9. What is the difference between FirstOrDefault() and SingleOrDefault()?
+
+FirstOrDefault() returns the first matching item or the default value if none exists. SingleOrDefault() expects at most one match and throws if multiple matches exist.
+
+Q10. What is Parallel.ForEach()?
+
+It processes items concurrently using parallel execution. It is suitable for some independent CPU-bound operations, but shared state, ordering and thread safety must be considered.
+11.3 Azure and architecture questions
+Q11. How do you improve scalability in a .NET application?
+
+Measure bottlenecks first. Optimize database queries, avoid blocking I/O, use pagination and caching appropriately, scale hosting resources, and decouple background work through queues when useful.
+
+Q12. What is caching?
+
+Caching stores reusable data temporarily so it can be retrieved faster or without repeatedly calling the original source. Caches can exist in memory, in a distributed cache, or at other layers.
+
+Consider cache expiration, invalidation, stale data, and whether information may be shared across users.
+
+Q13. What is a design pattern?
+
+A design pattern is a reusable approach to a common software design problem. Examples include Factory, Strategy, Repository and Singleton. Patterns should solve a real problem rather than add unnecessary complexity.
+
+Q14. What is N-tier architecture?
+
+N-tier architecture separates an application into logical or physical layers, such as presentation, business logic and data access. The separation improves organization, maintainability and testing when designed appropriately.
+
+Q15. What is the Repository pattern?
+
+It provides an abstraction for data access. It can make data operations easier to test and centralize, but EF Core's DbContext already provides repository-like and unit-of-work behavior. A custom repository should add useful value rather than simply wrap every method without a reason.
+
+Part 12. Project-based interview preparation
+Your project experience is especially important for a 3–5-year role. Interviewers may spend a substantial part of the technical round asking what you actually built.
+
+Prepare these examples based on your real work, and change the sample answers to match your actual responsibilities.
+12.1 Meeting Room Booking System
+Sample project introduction
+"I worked on a Meeting Room Booking System using ASP.NET MVC for head-office operations. It allowed users to view room availability and book meeting rooms through a visual interface. It also supported approval workflows based on meeting duration, notifications, reminders and time-extension requests. The purpose was to improve transparency and reduce manual coordination."
+Questions you should be ready for
+Q1. How do you prevent two users from booking the same room at the same time?
+
+Answer: I would validate the requested time range against existing bookings and check for overlapping reservations. However, application-level validation alone is insufficient when concurrent requests occur. I would use an appropriate transaction and concurrency strategy, and enforce database-level consistency wherever the schema and business rules allow it.
+
+For example, two bookings overlap when:
+existingStart < requestedEnd
+AND
+existingEnd > requestedStart
+
+
+This assumes a consistent time-zone strategy and that bookings use start-inclusive, end-exclusive time intervals.
+
+Q2. How would you implement approval workflows?
+
+Answer: I would define the approval rules in business logic, maintain a booking status such as Pending, Approved or Rejected, identify the appropriate approver, and validate each status transition. The API should prevent unauthorized users from approving requests and maintain an audit trail where required.
+
+Q3. How would you send reminders?
+
+Answer: I would use a scheduled background process or an event-driven approach. The process would identify bookings that require reminders, send notifications, and record the notification outcome. In an Azure implementation, a timer-triggered Function or a queue-based worker could be appropriate.
+
+Q4. What would you do if the notification failed but the booking was saved?
+
+Answer: I would distinguish the booking transaction from notification delivery. A reliable design could persist a notification task alongside the booking, using an outbox or queue-based approach, and retry failed notifications. I would ensure retries do not create duplicate notifications unnecessarily.
+12.2 Legal Case Management System
+Sample project introduction
+"I worked on a Legal Case Management module called Case Gold using ASP.NET MVC. It supported corporate legal-case tracking and related records. My preparation would focus on explaining the case lifecycle, database relationships, validation, reporting and the specific functionality I personally developed."
+Likely questions
+Q1. How would you design the database?
+
+Possible tables include:
+- Cases
+- Branches
+- Advocates
+- Hearings
+- Documents
+- CaseStatusHistory
+Use primary keys, foreign keys and suitable indexes. The exact design should reflect the actual application requirements.
+
+Q2. How do you protect legal documents?
+
+Apply authentication and authorization, verify that a user is permitted to access the particular case, validate uploaded files, store them securely and avoid exposing sensitive document paths. Log important access or modification events where required.
+
+Q3. How would you improve a slow case report?
+
+Check the SQL execution plan, joins, filters, indexes and row counts. Avoid retrieving unnecessary columns and consider pagination or precomputed reporting structures if the workload warrants them.
+12.3 Excel Upload / Operational Tracking module
+Sample project introduction
+"I worked on an operational tracking module that accepted Excel uploads. The important engineering concerns were validating file structure and row data, handling invalid records, preventing duplicates, persisting data safely and providing useful error feedback."
+Likely questions
+Q1. How do you validate an Excel file?
+
+Check file size, expected file format, required columns, data types, missing values and business rules. Do not rely only on the file extension. Apply safe parsing and resource limits.
+
+Q2. How do you handle duplicate rows?
+
+Define what makes a record unique, validate duplicates within the upload and against existing database records, and enforce a database constraint when appropriate. Account for concurrent uploads.
+
+Q3. Should the entire upload fail if one row is invalid?
+
+That depends on business requirements. An all-or-nothing transaction preserves atomicity. Partial processing can be appropriate if valid rows may be accepted independently, but the system must report rejected rows and ensure consistent handling of duplicates and failures.
+
+Q4. How would you process a very large file?
+
+Avoid loading unbounded amounts of data into memory. Consider streaming or chunked parsing, bounded batches, database bulk operations where appropriate, and background processing with progress tracking.
+
+Part 13. Production support, Agile and deployment
+13.1 Production troubleshooting
+When a production issue occurs, use a structured process:
+1. Understand the impact and identify affected users or operations.
+2. Check application logs, metrics and traces.
+3. Review recent deployments and configuration changes.
+4. Investigate database performance and downstream dependencies.
+5. Reproduce the issue safely if possible.
+6. Mitigate or roll back when appropriate.
+7. Verify recovery and communicate with stakeholders.
+8. Document the root cause and prevent recurrence.
+Interview question: The application is suddenly returning HTTP 500. What do you do?
+
+Answer: I would check the timestamp, request details, logs, exception traces, recent deployments and dependency health. I would determine whether the problem affects all endpoints or a particular operation, mitigate the issue safely, and fix the root cause. I would not expose internal exception details to the client.
+13.2 Agile methodology
+Agile is an approach to software development based on iterative delivery, collaboration, feedback and adaptation.
+
+Common Scrum events include:
+- Sprint planning
+- Daily Scrum
+- Sprint review
+- Sprint retrospective
+Common work items include user stories, tasks and bugs.
+
+Interview question: What do you do during a code review?
+
+Answer: I check whether the code meets requirements, follows team standards, handles errors safely, protects sensitive data, performs efficiently and includes suitable tests. I also respond to feedback and explain design decisions constructively.
+13.3 Deployment and rollback
+A deployment process may include:
+- Reviewing and approving changes.
+- Building and testing the application.
+- Preparing database changes.
+- Deploying to staging or a controlled environment.
+- Performing smoke tests.
+- Releasing to production.
+- Monitoring the application after release.
+- Rolling back or applying a forward fix if problems occur.
+Database changes require particular care because rolling back application binaries does not necessarily reverse a database migration safely.
+
+Part 14. Final mock interview: 25 high-priority questions
+Try answering each question aloud before reading the suggested answer. These are representative preparation questions, not a prediction of the exact interview.
+Self-test
+25 of 25 answers revealed
+
+1What is the difference between an abstract class and an interface?An interface defines a contract. An abstract class can define a contract and share implementation or state. A class can implement multiple interfaces but inherit from only one class.
+
+
+2Explain dependency injection.Dependencies are supplied to a class from outside rather than constructed inside it. This reduces coupling and makes code easier to test.
+
+
+3Explain Transient, Scoped and Singleton.Transient creates an instance each time it is resolved; Scoped shares an instance within a scope; Singleton shares an instance for the application lifetime.
+
+
+4What is middleware?A component in the ASP.NET Core request pipeline that can inspect requests and responses, call the next component or end the pipeline.
+
+
+5What is REST?An architectural style for networked applications. RESTful APIs commonly expose resources through URLs and use HTTP methods and status codes.
+
+
+6What is the difference between 401 and 403?401 indicates authentication is missing or invalid. 403 indicates the caller is authenticated but lacks permission.
+
+
+7What is JWT?A compact token format commonly used to carry signed claims for authentication and authorization. The API must validate the token.
+
+
+8What is LINQ?Language Integrated Query, which provides operators for filtering, transforming, grouping and aggregating sequences.
+
+
+9What is the difference between IEnumerable and IQueryable?IEnumerable supports enumeration; IQueryable allows a query provider to translate an expression, often to SQL. Materializing the query changes where later operations run.
+
+
+10What is async/await?C# language features used to write asynchronous code, especially for I/O-bound operations, without blocking the calling thread while waiting.
+
+
+11What is EF Core?An ORM that maps .NET classes to database records and supports LINQ queries, change tracking and schema migrations.
+
+
+12What is a migration?A versioned description of database schema changes managed through EF Core tools.
+
+
+13What is a clustered index?An index whose leaf level contains the table's data rows, determining their organization in the index.
+
+
+14What are ACID properties?Atomicity, Consistency, Isolation and Durability—the core properties used to describe reliable transactions.
+
+
+15How do you find the second-highest salary?Use MAX(Salary) with a condition excluding the overall maximum, or use DENSE_RANK over salaries in descending order and select rank 2.
+
+
+16What is SQL injection?A vulnerability in which untrusted input changes the intended SQL command. Parameterized queries and safe ORM APIs help prevent it.
+
+
+17What is Azure App Service?A managed hosting platform for web applications and APIs.
+
+
+18What is Azure Functions?A serverless compute service that runs code in response to triggers, such as schedules, HTTP requests or queue messages.
+
+
+19What is Azure Service Bus?A managed messaging service that decouples application components using queues and topics.
+
+
+20What is Azure Key Vault?A service for securely managing secrets, cryptographic keys and certificates.
+
+
+21What is CI/CD?CI automates integrating, building and testing code changes. CD automates preparing releases or deploying them.
+
+
+22What is Docker?A platform for building and running containerized applications.
+
+
+23What are microservices?Independently deployable services organized around business capabilities, with added operational and distributed-systems complexity.
+
+
+24How do you test an API service?Use unit tests for business logic, integration tests for database and dependency behavior, and end-to-end tests for complete workflows.
+
+
+25How do you answer an Azure question if you have no production experience?Be transparent about your hands-on experience, explain the service accurately, connect it to your .NET knowledge and describe any practice project you have actually completed.
+
+
+Hide all answers
+
+Part 15. Your self-paced study plan
+You do not have to finish everything in a few days. Study in sequence, practise examples, and return to difficult subjects as needed.
+Stage	Subjects	What you should be able to do
+1	C# basics	Write small programs using conditions, loops, methods and collections
+2	OOP and advanced C#	Explain OOP, SOLID, delegates, LINQ and async/await
+3	.NET and ASP.NET Core	Explain middleware, routing, DI and MVC
+4	REST API	Build CRUD endpoints with validation and error handling
+5	SQL Server	Write joins, grouping, subqueries and performance-oriented queries
+6	EF Core	Connect an API to a database and perform CRUD operations
+7	Azure	Explain core services and practise deploying an API
+8	DevOps and testing	Explain Git, CI/CD, containers and test types
+9	Project and mock interviews	Explain your actual work and solve production scenarios
+
+For every topic, follow this routine:
+1. Read the concept until you understand it.
+2. Type and run the example yourself.
+3. Explain it aloud without looking at the notes.
+4. Answer at least three interview questions.
+5. Connect it to a real feature or problem from your project experience.
+Official documentation for continued study
+- C# fundamentals
+- ASP.NET Core
+- Entity Framework Core
+- SQL Server
+- Microsoft Azure learning paths
+- Azure DevOps
+- Infosys .NET Developer interview reports on Glassdoor
+My recommendation: Start with C# and OOP, then master Web API and SQL Server before moving to Azure. Those subjects provide the foundation for nearly every other responsibility in your JD. For Azure, combine the notes with hands-on practice; for project questions, prepare detailed and truthful examples of what you personally implemented.
